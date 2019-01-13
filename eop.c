@@ -45,12 +45,10 @@ int endsWith(const char *str, const char *suffix)
 
 int main(int argc, char *argv[])
 {
-	int32_t layer = 10000;
+	int32_t layer = 9999;
 	uint32_t displayNumber = 0;
 	int xOffset = 0;
 	int yOffset = 0;
-	int width = 0;
-	int height = 0;
 	char *f_name = NULL;
 	int result = 0;
 	//---------------------------------------------------------------------
@@ -61,13 +59,11 @@ int main(int argc, char *argv[])
 	case 2:
 		f_name = argv[1];
 		break;
-	case 7:
+	case 5:
 		f_name = argv[1];
 		xOffset = atoi(argv[2]);
 		yOffset = atoi(argv[3]);
-		width = atoi(argv[4]);
-		height = atoi(argv[5]);
-		layer = atoi(argv[6]);
+		layer = atoi(argv[4]);
 		break;
 	default:
 		return 1;
@@ -106,13 +102,6 @@ int main(int argc, char *argv[])
 	result = vc_dispmanx_display_get_info(display, &info);
 	assert(result == 0);
 
-	// Calculate linear scaling maintaining aspect ratio
-	if (width == 0 && height != 0) {
-		width = (height * image.width) / image.height;
-	} else if (width != 0 && height == 0) {
-		height = (width * image.height) / image.width;
-	}
-
 	// Create a resource and copy bitmap to resource
 	uint32_t vc_image_ptr;
 	DISPMANX_RESOURCE_HANDLE_T resource = vc_dispmanx_resource_create(
@@ -139,6 +128,9 @@ int main(int argc, char *argv[])
 	assert(update != 0);
 
 	// Calculate source and destination rect values
+	int width = image.width;
+	int height = image.height;
+	fprintf(stderr, "Unable to load %d %d\n", width, height);
 	VC_RECT_T srcRect, dstRect;
 	vc_dispmanx_rect_set(&srcRect, 0, 0, image.width << 16, image.height << 16);
 	vc_dispmanx_rect_set(&dstRect, xOffset, yOffset, width, height);
