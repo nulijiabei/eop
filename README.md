@@ -1,6 +1,13 @@
 # eop
 Eye of Pi Image Viewer for RaspberryPi using Dispmanx
 
+	// 亲测可用 ...
+
+	No LSB modules are available.
+	Distributor ID:	Raspbian
+	Description:	Raspbian GNU/Linux 9.4 (stretch)
+	Release:	9.4
+	Codename:	stretch
 
 ## Build instructions
 
