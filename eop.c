@@ -17,22 +17,6 @@ static void signalHandler(int signalNumber)
 {
 }
 
-void usage(const char *program)
-{
-	fprintf(stderr, "Usage: %s ", program);
-	fprintf(stderr, "<file> [x y w h]\n");
-	fprintf(stderr, "	file     png or jpeg file to display\n");
-	fprintf(stderr, "	x        horizontal offset\n");
-	fprintf(stderr, "	y        vertical offset\n");
-	fprintf(stderr, "	w        width to use [0 for height constrained]\n");
-	fprintf(stderr, "	h        height to use [0 for width constrained]\n");
-	fprintf(stderr, "	           note: both height and width can be zero for fullscreen\n");
-	fprintf(stderr, "\n");
-
-	exit(EXIT_FAILURE);
-}
-
-
 bool loadImage(char* f_name, Image *img)
 {
 	if (endsWith(f_name, ".png"))
@@ -61,7 +45,7 @@ int endsWith(const char *str, const char *suffix)
 
 int main(int argc, char *argv[])
 {
-	int32_t layer = 1;
+	int32_t layer = 10000;
 	uint32_t displayNumber = 0;
 	int xOffset = 0;
 	int yOffset = 0;
@@ -77,15 +61,15 @@ int main(int argc, char *argv[])
 	case 2:
 		f_name = argv[1];
 		break;
-	case 6:
+	case 7:
 		f_name = argv[1];
 		xOffset = atoi(argv[2]);
 		yOffset = atoi(argv[3]);
 		width = atoi(argv[4]);
 		height = atoi(argv[5]);
+		layer = atoi(argv[6]);
 		break;
 	default:
-		usage(program);
 		return 1;
 	}
 
